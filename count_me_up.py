@@ -15,7 +15,7 @@ class CountMeUp:
     self.candidate_votes = {1:0, 2:0, 3:0, 4:0, 5:0}
     self.users = {}
 
-  def add_vote(self, user, candidate):
+  async def add_vote(self, user, candidate):
     """
     The function will add the vote to the queue.
     Each vote is stored as a tuple in the queue as (user, candidate)
@@ -24,7 +24,7 @@ class CountMeUp:
     """
     self.Queue.put((user, candidate))
 
-  def process_vote(self):
+  async def process_vote(self):
     """
     The function will process a vote at the beginning of the queue. If the queue is empty for more than 20seconds,
     an Empty exception will be raised.
@@ -44,5 +44,5 @@ class CountMeUp:
 
   def display_statistics(self):
     for candidate, n_votes in self.candidate_votes.items():
-      print()
+      print("Candidate {}: {}".format(candidate, n_votes))
 
