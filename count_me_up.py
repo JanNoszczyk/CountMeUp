@@ -1,4 +1,5 @@
 import queue
+import threading
 
 class CountMeUp:
   """
@@ -15,6 +16,11 @@ class CountMeUp:
     self.candidate_votes = {1:0, 2:0, 3:0, 4:0, 5:0}
     self.users = {}
 
+    # Thread that will run process_vote in the background
+    thread = threading.Thread(target=self.process_vote, args=())
+    thread.daemon = True
+    thread.start()
+
   def add_vote(self, user, candidate):
     """
     The function will add the vote to the queue.
@@ -24,7 +30,7 @@ class CountMeUp:
     """
     self.Queue.put((user, candidate))
 
-  async def process_vote(self):
+  def process_vote(self):
     """
     The function will process a vote at the beginning of the queue. If the queue is empty for more than 20seconds,
     an Empty exception will be raised.
@@ -32,15 +38,17 @@ class CountMeUp:
     which counts up the number of valid votes made per candidate. Otherwise, the vote will not be counted. The numbers
     of votes made per user are tracked in the dictionary users.
     """
-    user, candidate = self.Queue.get(timeout=20)
-    if user in self.users:
-      if self.users[user] <= 3:
-        # The vote will only be counted if its valid
-        self.candidate_votes[candidate] += 1
-      self.users[user] += 1
-    else:
-      # If the user is new, add him to the users dictionary
-      self.users[user] = 1
+    while True:
+      user, candidate = self.Queue.get()
+      print("Doing ", user, candidate)
+      if user in self.users:
+        if self.users[user] <= 3:
+          # The vote will only be counted if its valid
+          self.candidate_votes[candidate] += 1
+        self.users[user] += 1
+      else:
+        # If the user is new, add him to the users dictionary
+        self.users[user] = 1
 
   def display_statistics(self):
     for candidate, n_votes in self.candidate_votes.items():
