@@ -15,7 +15,7 @@ class CountMeUp:
     self.candidate_votes = {1:0, 2:0, 3:0, 4:0, 5:0}
     self.users = {}
 
-  async def add_vote(self, user, candidate):
+  def add_vote(self, user, candidate):
     """
     The function will add the vote to the queue.
     Each vote is stored as a tuple in the queue as (user, candidate)
