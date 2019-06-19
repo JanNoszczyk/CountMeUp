@@ -44,7 +44,4 @@ class CountMeUp:
       self.users[user] = 1
       self.candidate_votes[candidate] += 1
 
-  def display_statistics(self):
-    for candidate, n_votes in self.candidate_votes.items():
-      print("Candidate {}: {}".format(candidate, n_votes))
 

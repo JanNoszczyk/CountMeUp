@@ -1,10 +1,8 @@
 from count_me_up import CountMeUp
 import json
-import threading
 import atexit
-from uuid import uuid4
+import threading
 from flask import Flask, request
-from random import randint
 
 
 # Create new CountMeUp object
@@ -65,15 +63,6 @@ def check_candidate_votes():
     :return: API call will return the current candidate statistics
     """
     return json.dumps(counter.candidate_votes)
-
-
-@app.route('/random_votes/')
-def add_random_votes():
-    for i in range(100):
-        user = str(uuid4())
-        candidate = randint(1, 5)
-        counter.add_vote(user, candidate)
-    return "Done adding"
 
 
 @app.route('/clear_votes/')
