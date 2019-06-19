@@ -40,7 +40,6 @@ def create_app():
         with lock:
             # Process a single vote from the queue
             counter.process_vote()
-            print(counter.candidate_votes)
         # Start next thread to process a vote again in the next time interval
         thread = threading.Timer(pool_time, process_votes, ())
         thread.start()
@@ -62,6 +61,9 @@ app = create_app()
 
 @app.route('/')
 def check_candidate_votes():
+    """
+    :return: API call will return the current candidate statistics
+    """
     return json.dumps(counter.candidate_votes)
 
 
@@ -76,22 +78,22 @@ def add_random_votes():
 
 @app.route('/clear_votes/')
 def clear_votes():
+    """
+    Will reset the candidate vote statistics
+    """
     counter.candidate_votes = {1:0, 2:0, 3:0, 4:0, 5:0}
     return "Votes cleared"
 
 
-# @app.route("/submit_vote/")
-# def hello():
-#     user, candidate = request.args.getlist('param')
-#     print(user, candidate)
-#     counter.add_vote(user, candidate)
-#     return user, candidate
-
 @app.route('/submit', methods=['GET'])
-def foo():
-   user = request.args.get('user', None)
-   candidate = request.args.get('candidate', None)
-   return user + '' + candidate
+def submit_vote():
+    """
+    API call will add the user and his vote to the current vote queue
+    """
+    user = request.args.get('user', None)
+    candidate = request.args.get('candidate', None)
+    counter.add_vote(str(user), int(candidate))
+    return user + ' ' + candidate
 
 
 if __name__ == "__main__":

@@ -10,7 +10,6 @@ class CountMeUp:
   I do not have any experience in front-end or server-side developtment. Therefore, I have implemented my CountMeUp
   program as running locally with all the data stored locally. Alternatively,
   """
-
   def __init__(self):
     self.maxsize = 10000000
     self.Queue = queue.Queue(self.maxsize)
