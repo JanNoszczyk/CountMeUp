@@ -53,10 +53,7 @@ def test_2():
         votes = [(str(uuid4()), randint(1, 5)) for i in range(50)]
         for user, candidate in votes:
             url = MAIN_URL + 'submit?user={}&candidate={}'.format(user, candidate)
-            try:
-                requests.get(url)
-            except:
-                print("Request error 4")
+            requests.get(url)
 
     start_timer = time.time()
     submit_100_random_votes()
