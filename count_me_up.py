@@ -1,5 +1,6 @@
 import queue
 
+
 class CountMeUp:
   """
   CountMeUp creates a FIFO queue to store all the votes. It also has methods to add new votes to the queue and to
@@ -9,16 +10,12 @@ class CountMeUp:
   I do not have any experience in front-end or server-side developtment. Therefore, I have implemented my CountMeUp
   program as running locally with all the data stored locally. Alternatively,
   """
+
   def __init__(self):
     self.maxsize = 10000000
     self.Queue = queue.Queue(self.maxsize)
     self.candidate_votes = {1:0, 2:0, 3:0, 4:0, 5:0}
     self.users = {}
-
-    # # Thread that will run process_vote in the background
-    # thread = threading.Thread(target=self.process_vote, args=())
-    # thread.daemon = True
-    # thread.start()
 
   def add_vote(self, user, candidate):
     """
@@ -37,9 +34,7 @@ class CountMeUp:
     which counts up the number of valid votes made per candidate. Otherwise, the vote will not be counted. The numbers
     of votes made per user are tracked in the dictionary users.
     """
-    # while True:
     user, candidate = self.Queue.get()
-    print("Doing ", user, candidate)
     if user in self.users:
       if self.users[user] <= 3:
         # The vote will only be counted if its valid
@@ -48,6 +43,7 @@ class CountMeUp:
     else:
       # If the user is new, add him to the users dictionary
       self.users[user] = 1
+      self.candidate_votes[candidate] += 1
 
   def display_statistics(self):
     for candidate, n_votes in self.candidate_votes.items():
