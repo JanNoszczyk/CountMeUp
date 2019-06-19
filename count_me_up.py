@@ -35,7 +35,7 @@ class CountMeUp:
     """
     user, candidate = self.Queue.get()
     if user in self.users:
-      if self.users[user] <= 3:
+      if self.users[user] < 3:
         # The vote will only be counted if its valid
         self.candidate_votes[candidate] += 1
       self.users[user] += 1
