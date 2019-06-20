@@ -66,8 +66,8 @@ def test_2():
 
     print("Checking that statistics updated in less than a minute")
     print("Checked for 2 vote statistic measurements made while 100 new votes were added")
-    print("Finishes in: ", stop_timer - start_timer)
-    # Check that the two return vote statistics are different (ie they were updated)
+    print("Finished in: ", stop_timer - start_timer)
+    # Check that the two returned vote statistics are different (ie they were updated)
     assert stats_1 != stats_2
     # Check that the running time is below 1s
     assert stop_timer-start_timer < 1
