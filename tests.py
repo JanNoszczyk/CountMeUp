@@ -49,17 +49,18 @@ def test_2():
     """
     Test to confirm that vote statistics are updated in less than 1s
     """
-    def submit_100_random_votes():
+    def submit_random_votes():
         # Adding 50 new votes
-        votes = [(str(uuid4()), randint(1, 5)) for i in range(50)]
-        for user, candidate in votes:
+        for i in range(50):
+            user = str(uuid4())
+            candidate = randint(1, 5)
             url = MAIN_URL + 'submit?user={}&candidate={}'.format(user, candidate)
             requests.get(url)
 
     start_timer = time.time()
-    submit_100_random_votes()
+    submit_random_votes()
     stats_1 = requests.get(MAIN_URL).text
-    submit_100_random_votes()
+    submit_random_votes()
     stats_2 = requests.get(MAIN_URL).text
     stop_timer = time.time()
 
