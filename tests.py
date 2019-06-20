@@ -1,5 +1,6 @@
 """Before running, make sure that app.py is running locally first.
-Restart app.py before running again"""
+RESTART app.py BEFORE RERUNNING TESTS
+"""
 import time
 import json
 import requests
@@ -29,7 +30,7 @@ def test_1():
         url = MAIN_URL + 'submit?user={}&candidate={}'.format(user, candidate)
         response_1 = requests.get(url).text
         # Assert that the votes were submitted correctly
-        print("Checking vote response for user {} {}".format(user, candidate))
+        print("Checking vote response for user {}, who voted for {}".format(user, candidate))
         assert response_1 == user + ' ' + str(candidate)
 
     # Wait a little before asking for statistics again
@@ -37,7 +38,7 @@ def test_1():
     # Attempt to get user statistics
     response_2 = requests.get(MAIN_URL).text
     response_2 = json.loads(response_2)
-    print("Checking that all vote statistics were submitted correctly for (user, candidate): \n", response_2)
+    print("Checking that vote statistics were submitted correctly\n('candidate', n_votes): \n", response_2)
     print("User John made 2 votes for both candidates 1 and 5, only one vote for candidate 5 was counted")
     assert response_2['1'] == 2 and response_2['5'] == 1
     assert response_2['2'] == 2
@@ -63,7 +64,7 @@ def test_2():
     stop_timer = time.time()
 
     print("Checking that statistics updated in less than a minute")
-    print("Checked for 2 vote statistic measurements with 100 new votes added.")
+    print("Checked for 2 vote statistic measurements made while 100 new votes were added")
     print("Finishes in: ", stop_timer - start_timer)
     # Check that the two return vote statistics are different (ie they were updated)
     assert stats_1 != stats_2

@@ -9,7 +9,7 @@ from flask import Flask, request
 counter = CountMeUp()
 
 # Time interval between calling counter.process_vote
-pool_time = 0.0001
+pool_time = 0.01
 
 # lock to control access to variable
 lock = threading.Lock()

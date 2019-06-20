@@ -10,6 +10,7 @@ class CountMeUp:
   I do not have any experience in front-end or server-side developtment. Therefore, I have implemented my CountMeUp
   program as running locally with all the data stored locally. Alternatively,
   """
+
   def __init__(self):
     self.maxsize = 10000000
     self.Queue = queue.Queue(self.maxsize)
@@ -27,8 +28,7 @@ class CountMeUp:
 
   def process_vote(self):
     """
-    The function will process a vote at the beginning of the queue. If the queue is empty for more than 20seconds,
-    an Empty exception will be raised.
+    The function will process a vote at the beginning of the queue.
     If the vote is valid (submitted by a user with at most 3 votes) it will be added to the candidate_votes dictionary
     which counts up the number of valid votes made per candidate. Otherwise, the vote will not be counted. The numbers
     of votes made per user are tracked in the dictionary users.
